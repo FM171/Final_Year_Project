@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+
+{% block app_content %}
+{% if current_user.is_authenticated and current_user.role == 'admin' %}
+
+
+
+<div class="container">
+  <h3 class='text-muted' style="padding-left:20px;">Search result: <span class="text-{{color}}">{{ search_msg }}</span></h3><hr>
+  <!-- Blog Entries Column -->
+  <div class="col-md-9 col-md-offset-1">
+    
+    {% for rejectApp in rejectApps %}
+    <div class="col-sm-6 col-md-3">
+      <a href="{{ url_for('apps.get_rejectApp', id=rejectApp.id )}}">Open application {{rejectApp.last_name}}
+        
+      </div>
+      
+      {% endfor %}
+    </div>
+  </div>
+  
+  {% endif %}
+  
+{% endblock %}

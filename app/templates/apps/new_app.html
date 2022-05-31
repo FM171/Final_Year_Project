@@ -1,0 +1,60 @@
+
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block app_content %}
+<link rel="stylesheet" href="css/styles.css">
+<section class="grades">
+  <h2><b>Entry requirements</b></h2>
+    <ul><b></b>
+        <h5><li>Five GCSEs at grade C or above including English and Mathematics</li></h5>
+        <h5><li>UCAS Points: 56</li></h5>
+        <h5><li>QAA: PASS</li></h5>
+        <h5><li>International Baccalaureate: 24+ points</li></h5>
+        <h5><li>IELITS:6.0</li></h5>
+      </ul>
+  </section>
+  
+  </br>
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <h4 class="form-signin-heading">Application form</h4>
+      <hr>
+      <form class="form form-horizontal" method="post" role="form">
+        {{ form.hidden_tag() }}
+        {{ wtf.form_errors(form, hiddens="only") }}
+
+        <h3 style="border: 2px solid Tomato;"> Qualifications </h3>
+
+        
+        {{ wtf.form_field(form.gcse) }}
+        {{ wtf.form_field(form.gcse2) }}
+        {{ wtf.form_field(form.gcse3) }}
+        {{ wtf.form_field(form.gcse3_grade) }}
+        {{ wtf.form_field(form.gcse4) }}
+        {{ wtf.form_field(form.gcse4_grade) }}
+        {{ wtf.form_field(form.gcse5) }}
+        {{ wtf.form_field(form.gcse5_grade) }}
+        {{ wtf.form_field(form.ucas) }}
+        {{ wtf.form_field(form.qaa) }}
+
+        
+        {{ wtf.form_field(form.interbac) }}
+        {{ wtf.form_field(form.ielits) }}
+
+        <h3 style="border: 2px solid Violet;">  Work experience </h3>
+        
+
+        {{ wtf.form_field(form.company) }} 
+        {{ wtf.form_field(form.description) }} 
+        {{ wtf.form_field(form.start_date) }} 
+        {{ wtf.form_field(form.end_date) }}
+        Mature applications are those above age of 21. 
+        {{ wtf.form_field(form.applicationtype_id) }} 
+        {{ wtf.form_field(form.personal_statement) }}  
+       
+        {{ wtf.form_field(form.submit, class="btn btn-info btn-block") }}
+        
+      </form>
+    </div>
+  </div>
+{% endblock %}

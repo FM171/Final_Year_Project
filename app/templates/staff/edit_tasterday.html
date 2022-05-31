@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <h4 class="form-signin-heading">Edit tasterday</h4>
+      <hr>
+      <form class="form form-horizontal" method="post" role="form">
+        {{ form.hidden_tag() }}
+        {{ wtf.form_errors(form, hiddens="only") }}
+
+       
+        {{ wtf.form_field(form.title) }}
+        {{ wtf.form_field(form.location) }}
+        {{ wtf.form_field(form.date) }}
+        {{ wtf.form_field(form.start_time) }}
+        {{ wtf.form_field(form.end_time) }}
+      
+        
+        
+
+        {{ wtf.form_field(form.update, class="btn btn-info btn-block") }}
+		{{ wtf.form_field(form.cancel, class="btn btn-info btn-block") }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

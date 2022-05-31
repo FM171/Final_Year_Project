@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+
+{% block app_content %}
+<div class="container">
+    <div class="col-sm-6 col-md-3">
+        <div class="row">
+                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteUser">Delete</a>
+            <a href="{{ url_for('main.index') }}" class="btn btn-default">Return to home</a>
+            
+        </div>
+    </div>
+
+<!-- Delete User Modal-->
+<div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="deleteModalLabel">Delete: {{ current_user.username }}</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Are you sure?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <a href="{{ url_for('auth.delete_user', id=current_user.id) }}" class="btn btn-danger">Yes</a>
+            </div>
+            </div>
+        </div>
+  </div>
+
+
+
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <h4 class="form-signin-heading">edit details</h4>
+      <hr>
+      <form class="form form-horizontal" method="post" role="form">
+        {{ form.hidden_tag() }}
+        {{ wtf.form_errors(form, hiddens="only") }}
+
+        {{ wtf.form_field(form.first_name) }}
+        {{ wtf.form_field(form.last_name) }}
+        {{ wtf.form_field(form.email) }}
+        {{ wtf.form_field(form.house_number) }}
+        {{ wtf.form_field(form.city) }}
+        {{ wtf.form_field(form.post_code) }}
+        {{ wtf.form_field(form.country) }}
+        {{ wtf.form_field(form.password) }}
+        {{ wtf.form_field(form.password2) }}
+        {{ wtf.form_field(form.update, class="btn btn-info btn-block") }}
+		{{ wtf.form_field(form.cancel, class="btn btn-info btn-block") }}
+      </form>
+    </div>
+{% endblock %}

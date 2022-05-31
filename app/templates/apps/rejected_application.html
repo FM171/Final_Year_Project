@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+<a href="{{ url_for('apps.delete_reject_record', id=rejectApp.id ) }}" class="btn btn-primary" > Delete record </a></li>
+
+    <div class="col-md-9">
+      <div class="content-section">
+          <h3 style="border: 2px solid Tomato;"> UK students section</h3>
+          
+      
+          <h3>email: {{ rejectApp.email }}</h3>
+          <h3>reason: {{ rejectApp.reason }}</h3>
+          <h3>last_name: {{ rejectApp.last_name }}</h3>
+          <h3>first_name: {{ rejectApp.first_name }}</h3>
+        
+  </div>
+</div>
+
+
+{% endblock %}

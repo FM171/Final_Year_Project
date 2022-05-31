@@ -1,0 +1,4 @@
+Dear {{ user.username }},
+
+Thank you for registering!
+

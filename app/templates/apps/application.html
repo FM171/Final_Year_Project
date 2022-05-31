@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<div class="container">
+    <div class="col-sm-12 col-md-12">
+        <div class="row">  
+                
+            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteApplication">Withdraw application</a></li>
+        
+            <a href="{{ url_for('staff.get_user_tasterday', id=application.id, tasterday_id=application.tasterday_id )}}"  class="btn btn-primary" >Open TasterDay </a></li>
+            {% if current_user.is_authenticated and current_user.role == 'admin' %}
+            <a href="{{ url_for('apps.edit_app', id=application.id )}}" class="btn btn-primary">Add to TasterDay </a>
+            <a href="{{ url_for('apps.success_app', id=application.id, email=application.email) }}" class="btn btn-primary" >Send application success email</a>
+            <a href="{{ url_for('apps.reject_app', id=application.id,  email=application.email,  first_name=application.first_name, last_name=application.last_name ) }}" class="btn btn-primary" > Record application</a></li>
+            <a href="{{ url_for('staff.remove_from_tasterday', id=application.id, tasterday_id=application.tasterday_id ) }}" class="btn btn-primary" > Remove from  TasterDay</a></li>
+            {% endif %}
+
+        </div>
+        
+
+    </div>
+
+
+    
+
+
+    
+
+
+    <div class="col-md-9">
+        <div class="content-section">
+            
+            <h5 style="border: 2px solid Tomato;">Qualifications</h5>
+              
+              
+            <h5>GCSE Math grade: {{ application.gcse }}</h5>
+            <h5>GCSE English: {{ application.gcse2 }}</h5>
+            <h5>GCSE: {{ application.gcse3 }} {{ application.gcse3_grade }}</h5>
+            <h5>GCSE: {{ application.gcse4 }} {{ application.gcse4_grade }}</h5>
+            <h5>GCSE: {{ application.gcse5 }} {{ application.gcse5_grade }}</h5>
+            
+            <h5>UCAS points: {{ application.ucas }}</h5>
+            
+            <h5>QAA grade: {{ application.qaa }}</h5>
+            
+            
+            <h5> interbac: {{ application.interbac }}</h5>
+            <h5> ielits {{ application.ielits }}</h5>
+
+            <h5 style="border: 2px solid DodgerBlue;"> Work experience </h5>
+            <h5>{{ application.company }} </h5>
+            <h5>{{ application.description }}  </h5>
+            <h5>{{ application.start_date }} </h5>
+            <h5>{{ application.end_date }}</h5>
+            
+            <h5 style="border: 2px solid Violet;">  Personal details</h5>
+            
+            {{ application.first_name }} 
+            </br>
+            {{ application.last_name }} 
+            </br>
+            
+            {{ application.email }} 
+            </br>
+            <h4>Personal statement</h4>
+ 
+            
+           
+            {{ application.personal_statement }} 
+        </br>
+    </br>
+            <h4>Application Notes</h4>
+            <p>
+                Only DMU staff can view and leave notes on your application
+            </p>
+            </div><br>
+                
+                {% for note in application.note.all() %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true" style="padding-right:5px;"></span>
+                            <span>{{ note.user.last_name.upper() }}</span><br>
+                            
+                            <span class="text-right">Created {{ moment(note.created_at).fromNow() }}</span>
+                            {% if note.updated %}
+                                <br><span class="text-right">Updated {{ moment(note.created_at).fromNow() }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="panel-body">
+                            <p class="text-justify">{{ note.text }}</p>
+                            <hr>
+                            {% if current_user.username == note.user.username %}
+                            <a href="{{ url_for('apps.edit_note', id=note.application_id) }}" class="btn btn-primary btn-sm">Edit </a>
+                            <!-- <a href="#" class="btn btn-danger btn-sm">Delete </a> -->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
+                                Delete
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Deleting note</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>Are you sure?</h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                        <a href="{{ url_for('apps.delete_note', id1=application.id, id2=note.id) }}" class="btn btn-success">Yes</a>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}    
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="modal fade" id="deleteApplication" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="deleteModalLabel">Deleting Application:  {{ application.first_name }} {{ application.last_name }} </h3>
+                        </div>
+                        <div class="modal-body">
+                            <h4>Are you sure?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <a href="{{ url_for('apps.delete_app', id=application.id, email=application.email) }}" class="btn btn-primary" >Yes</a>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            
+            <br>
+            {% if current_user.is_authenticated %}
+            <div style="padding-bottom: 100px;">
+                {% include 'apps/_note_form.html' %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <br><br>
+    <hr>
+</div><br>    
+{% endblock %}

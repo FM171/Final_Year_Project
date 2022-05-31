@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+
+
+{% block app_content %}
+
+<h3><b>Foundation Year In computing at De Montfort University</b> </h3>
+
+<h5>The Foundation Year in Compuitng course is a great course for an introduction to a wide range of IT, communcation and study skills to prepare you for a future computing degree.The course covers topics such as computer animataion, office applications, such as spreadsheets and databases.</h5>
+
+<li><a href="https://www.dmu.ac.uk/study/courses/foundation-courses/computing-foundation/foundation-year-in-computing.aspx" >more info on course</a></li>
+</br>
+<p>If you wat apply to this course please <a href="{{ url_for('auth.register') }}">create an account</a> then submit an application </p>
+
+
+<section>
+ <h3>Useful links</h3> 
+ 
+ <li><a href="https://www.ucas.com/undergraduate/applying-to-university" >UCAS informationa and help</a></li> 
+ <li><a href="https://www.dmu.ac.uk/study/support/index.aspx" >DMU student support</a></li>
+ <li><a href="https://amberstudent.com/places/search/leicester-1811027154774" >Accommodation </a></li>
+</section>
+
+
+
+
+
+<!--
+{% if current_user.is_authenticated and current_user.role == 'applicant' %}
+
+<div class="row">
+   Blog Entries Column
+  <h3>Applications</h3>
+  <div class="col-md-12">
+    {% for application in applications %}
+    <div class="col-sm-6 col-md-3">
+      
+      
+      <a href="{{ url_for('apps.get_user_application', id=application.id, id2=current_user.id )}}">Open application 
+        
+        
+      </div>
+      {% endfor %}
+{% endif %}
+-->
+
+
+
+
+{% if current_user.is_authenticated and current_user.role == 'admin' %}
+ 
+ <!--Sidebar Widgets Column to show TasterDay-->
+ <h2>Search previously rejected applications</h2>
+
+  <form class="navbar-form navbar-left" method='POST' action="{{ url_for('apps.reject_search') }}">
+      <div class="form-group">
+          <input class="form-control mr-sm-2" placeholder="Search" aria-label="Search" type="text" name="search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> 
+      </div>
+  </form>
+
+
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+<div class="col-md-12">
+
+  <div class="panel panel-default">
+    <div class="panel-heading"><b>Taster Days</b></div>
+    Application that are not assigned to a TasterDay have a search key of 0 
+    <div class="panel-body">
+      <ul class="list-group">
+        <li class="list-group-item">
+          
+        </li>
+        {% for tasterday in tasterdays %}
+        <li class="list-group-item">
+            <a href="{{ url_for('staff.get_tasterday', id=tasterday.id  )}}">{{ tasterday.title }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+     
+
+
+
+
+
+</br>
+</br>
+</br>
+</br>
+    <div class="col-md-14 col-md-offset-14">
+       
+      <div class="panel panel-default">
+        <div class="panel-heading"><b>Types</b></div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <li class="list-group-item">
+                <a href="{{ url_for('main.index') }}">All</a>
+            </li>
+            {% for applicationtype in types %}
+            <li class="list-group-item">
+              <a href="{{ url_for('main.index', cat=applicationtype) }}">{{ applicationtype.title() }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+
+
+
+
+
+
+     
+</div>
+
+<div class="row">
+  <!-- Blog Entries Column -->
+  <h3>Applications</h3>
+  <div class="col-md-12">
+      {% for application in applications %}
+      <div class="col-sm-12 col-md-5">
+         
+        
+          <a href="{{ url_for('apps.get_application', id=application.id )}}">Open application {{application.first_name}} {{application.last_name}}
+
+          </application></a>
+      </div>
+      {% endfor %}
+      
+  </div>
+</div>
+
+<hr>
+<div class="text-center row col-md-8">
+  
+  {{ pagination.info }}
+   {{ pagination.links }}
+</div>
+</div>
+
+
+
+
+
+
+  {% endif %}
+
+
+
+{% endblock %}

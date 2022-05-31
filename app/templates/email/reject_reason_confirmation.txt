@@ -1,0 +1,6 @@
+
+Dear {{ rejectApp.last_name }}
+
+    Sorry to inform you we will not be moving forward with your application. The reason being, {{rejectApp.reason}} 
+
+    You might recieve another email confirming your applicationhas been withdrawn

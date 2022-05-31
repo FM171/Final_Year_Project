@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <h3>Edit note</h3>
+        {% if current_user.is_authenticated %}
+            {% include 'apps/_note_form.html' %}
+            <br>
+            <a href="{{ url_for('apps.get_application', id=id) }}" class="btn btn-default">Cancel</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<div class="container">
+    <div class="col-sm-6 col-md-3">
+        <div class="row">
+            {% if current_user.is_authenticated and current_user.role == 'admin' %}
+            
+            
+                <a href="{{ url_for('staff.edit_tasterday', id=tasterday.id) }}" class="btn btn-primary" >Edit</a>
+                <!--<a href="" class="text-danger" data-toggle="modal" data-target="#deleteInsurance">Delete</a> -->
+                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteTasterDay">Delete</a>
+                <h1 style="border: 2px solid Tomato;">Search key: {{ tasterday.id}}</h1>
+                <!-- Button trigger modal -->
+            {% endif %}
+            <a href="{{ url_for('main.index') }}" class="btn btn-default">Return to home</a>
+            <a href="{{ url_for('staff.pdf_template', title=tasterday.title, location=tasterday.location, start_time=tasterday.start_time, end_time=tasterday.end_time, date=tasterday.date)}}" class="btn btn-primary">Download details</a>
+        </div>
+    </div>
+
+  <div class="col-md-9">
+    <div class="content-section">
+        <h1 style="border: 2px solid Tomato;">Title: {{ tasterday.title}}</h1>
+        <h1 style="border: 2px solid lightsalmon;">  Location: {{ tasterday.location}} </h1>
+        <h1 style="border: 2px solid Violet;">   Date:  {{ tasterday.date}} </h1>
+
+        <h1 style="border: 2px solid DodgerBlue;">Start time: {{tasterday.start_time }}</h1>
+        <h1 style="border: 2px solid DodgerBlue;">End time: {{tasterday.end_time }}</h1>
+        
+        
+        
+   
+        
+                                           
+        
+
+      </p>
+    </br>
+    
+</div><br>
+                
+{% for response in tasterday.response.all() %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-user" aria-hidden="true" style="padding-right:5px;"></span>
+            <span>{{ response.role }} {{ response.first_name }} {{ response.last_name }}</span><br>
+            
+            <span class="text-right">Created {{ moment(response.created_at).fromNow() }}</span>
+            {% if response.updated %}
+                <br><span class="text-right">Updated {{ moment(review.updated_at).fromNow() }}</span>
+            {% endif %}
+        </div>
+        <div class="panel-body">
+            <p class="text-justify">{{ response.text }}</p>
+            <hr>
+            {% if ( (current_user.first_name == response.first_name)  and  ( current_user.last_name == response.last_name ) ) %}
+            <a href="{{ url_for('staff.edit_response', id=response.tasterday_id) }}" class="btn btn-primary btn-sm">Edit </a>
+            <!-- <a href="#" class="btn btn-danger btn-sm">Delete </a> -->
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
+                Delete
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="deleteModalLabel">Deleting response</h3>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <a href="{{ url_for('staff.delete_response', id1=tasterday.id, id2=response.id) }}" class="btn btn-success"> Yes</a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}    
+        </div>
+    </div>
+{% endfor %}
+
+
+<br>
+{% if current_user.is_authenticated %}
+<div style="padding-bottom: 100px;">
+{% include 'staff/_response_form.html' %}
+</div>
+{% endif %}
+</div>
+</div>
+<br><br>
+<hr>
+</div><br> 
+
+
+                <div class="modal fade" id="deleteTasterDay" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="deleteModalLabel">Deleting Tasterday:  {{ tasterday.title }} </h3>
+                        </div>
+                        <div class="modal-body">
+                            <h4>Are you sure?</h4>
+                            <h4>Please remove any invited applicants from this TasterDay before deleting</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <a href="{{ url_for('staff.delete_tasterday', id=tasterday.id) }}" class="btn btn-primary" >Yes</a>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+    
+            
+
+
+                   
+
+{% endblock %}

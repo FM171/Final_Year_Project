@@ -1,0 +1,5 @@
+<form method="POST" action="">
+    {{ form.hidden_tag() }}     
+    {{ wtf.form_field(form.text, rows="8") }}
+    {{ wtf.form_field(form.submit, button_map={'submit':'success'}) }}
+</form>

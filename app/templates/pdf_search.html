@@ -1,0 +1,38 @@
+<div class="col-md-12">
+
+  <div class="panel panel-default">
+    <div class="panel-heading"><b>Taster Days information</b></div>
+    tasterday 0 means the application is not assigned to a tasterday and 0 is the default tasterday id 
+    <div class="panel-body">
+      <ul class="list-group">
+        {% for tasterday in tasterdays %}
+        <li class="list-group-item">
+          {{ tasterday.id}}, {{tasterday.title}}, {{tasterday.date}},  {{tasterday.start_time}},  {{tasterday.end_time}}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading"><b>List</b></div>
+    <div class="panel-body">
+      <ul class="list-group">
+  </div>
+  </div>
+  <ol type="1">
+        <ol class="list-group-item">
+          
+        </ol>
+        {% for application in applications %}
+        <li class="list-group-item">
+             {{application.first_name}} {{application.last_name}} {{application.tasterday_id}}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+
+

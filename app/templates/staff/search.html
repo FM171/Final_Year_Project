@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+
+{% block app_content %}
+{% if current_user.is_authenticated and current_user.role == 'admin' %}
+
+
+
+<div class="container">
+  <h3 class='text-muted' style="padding-left:20px;">Search result: <span class="text-{{color}}">{{ search_msg }}</span></h3><hr>
+  <!-- Blog Entries Column -->
+  <div class="col-md-9 col-md-offset-1">
+    
+    {% for application in applications %}
+    
+    
+    <div class="col-sm-6 col-md-3">
+      <a href="{{ url_for('apps.get_application', id=application.id )}}">Open application {{application.first_name}} {{application.last_name}}
+        
+      </div>
+      
+      
+      {% endfor %}
+    </div>
+    
+  </div>
+</br>
+</br>
+</br>
+</br>
+</br>
+  <div>
+    
+      <a href="{{ url_for('staff.pdf_search' )}}" class="btn btn-primary">Download list of all applicants with corresponding tasterday </a>
+    
+  </div>
+  
+  
+  {% endif %}
+  
+  {% if current_user.is_authenticated and current_user.role == 'applicant' %}
+
+  <div class="container">
+    <h3 class='text-muted' style="padding-left:20px;">Search result: <span class="text-{{color}}">{{ search_msg }}</span></h3><hr>
+    <!-- Blog Entries Column -->
+    <div class="col-md-9 col-md-offset-1">
+      
+      {% for application in applications %}
+      
+      <div class="col-sm-6 col-md-3">
+        <a href="{{ url_for('apps.get_user_application', id=application.id, id2=current_user.id )}}">Open application {{application.first_name }} {{application.last_name }}
+        
+          
+        
+          
+        </div>
+        {% endfor %}
+        
+      </div>
+    </div>
+  {% endif %}
+ 
+    
+    {% endblock %}
